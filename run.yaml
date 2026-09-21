@@ -13,6 +13,8 @@ spec:
       value: "main"
     - name: app-name
       value: "tax-calculator"
+    - name: build-image
+      value: "us.icr.io/sn-labs-ubaidullahmi/tax-calculator"
   workspaces:
     - name: pipeline-workspace
       persistentVolumeClaim:
