@@ -17,3 +17,39 @@ spec:
         rm -rf ./*
         rm -rf ./.git
         echo "***** Workspace cleaned *****"
+
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: npm
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: run-npm-install
+      image: node:18-alpine
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/sh
+        set -e
+        echo "***** Installing node modules *****"
+        npm install
+
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: jasmine
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: run-jasmine-tests
+      image: node:18-alpine
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/sh
+        set -e
+        echo "***** Running tests *****"
+        npm test
